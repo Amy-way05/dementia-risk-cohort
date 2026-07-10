@@ -1,6 +1,6 @@
 # Dementia Risk Cohort Analysis — NHANES 2017–2018
 
-**[View Live Dashboard →](https://yourusername.github.io/dementia-risk-cohort/dementia_cohort_dashboard.html)**
+**[View Live Dashboard →](https://amy-way05.github.io/dementia-risk-cohort/dementia_cohort_dashboard.html)**
 
 ---
 

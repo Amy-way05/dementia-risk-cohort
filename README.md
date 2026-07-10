@@ -18,7 +18,7 @@ This project identifies a cognitive impairment risk cohort from NHANES 2017–20
 Participants aged 60+ were flagged as cognitively impaired using clinically-grounded thresholds: animal fluency score <11 or digit symbol score <35, consistent with published NHANES cognitive aging literature.
 
 **Data Integration**
-Five NHANES modules merged on participant ID: demographics, cognitive function, hypertension, diabetes, and smoking history — mirroring multi-table EHR linkage across clinical domains.
+Five NHANES modules merged on participant ID: demographics, cognitive function, hypertension, diabetes, and smoking history - mirroring multi-table EHR linkage across clinical domains.
 
 **Quality Control**
 Systematic missingness report across 8 key variables prior to analysis. Final analytic cohort retained after dropping participants with missing cognitive scores (5% missingness rate).

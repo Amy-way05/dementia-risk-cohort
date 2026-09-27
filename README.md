@@ -1,55 +1,31 @@
-# Dementia Risk Cohort Analysis — NHANES 2017–2018
+# Dementia Risk Cohort Analysis · NHANES
 
-**[View Live Dashboard →](https://amy-way05.github.io/dementia-risk-cohort/dementia_cohort_dashboard.html)**
+**Live app:** https://dementia-risk-cohort.streamlit.app  
+**Data:** CDC NHANES Cognitive Functioning Questionnaire (CFQ), cycles 2011-12 and 2013-14  
+**Cohort:** 3,126 adults aged 60+, real public-use data
 
----
+An interactive Streamlit dashboard analyzing cognitive impairment risk in older adults using two waves of real NHANES data. Built to demonstrate end-to-end data science: data wrangling, statistical modeling, experiment design, and communicating findings to both technical and non-technical audiences.
 
-## Overview
+## Four tabs
 
-This project identifies a cognitive impairment risk cohort from NHANES 2017–2018 public health data, applying the same analytical workflow used in EHR-based population health research: cohort definition, multi-source data integration, quality control, statistical modeling, and interactive reporting.
-
-**Analytic cohort:** 1,629 adults age 60+ | **Impairment rate:** 29.1% | **Mean age:** 70.3 years
-
----
-
-## Methodology
-
-**Cohort Definition**
-Participants aged 60+ were flagged as cognitively impaired using clinically-grounded thresholds: animal fluency score <11 or digit symbol score <35, consistent with published NHANES cognitive aging literature.
-
-**Data Integration**
-Five NHANES modules merged on participant ID: demographics, cognitive function, hypertension, diabetes, and smoking history - mirroring multi-table EHR linkage across clinical domains.
-
-**Quality Control**
-Systematic missingness report across 8 key variables prior to analysis. Final analytic cohort retained after dropping participants with missing cognitive scores (5% missingness rate).
-
-**Statistical Modeling**
-Logistic regression (GLM) modeling cognitive impairment as a function of age, sex, hypertension, diabetes, smoking, and income-to-poverty ratio.
-
-| Predictor | Odds Ratio | 95% CI | p-value |
-|-----------|-----------|--------|---------|
-| Age | 1.033 | 1.018–1.049 | <0.001 |
-| Income-to-Poverty Ratio | 0.881 | 0.815–0.954 | 0.002 |
-
-Age and income were the only statistically significant predictors, consistent with established dementia risk literature.
-
----
-
-## Dashboard
-
-Interactive 6-panel Plotly dashboard including:
-- Impairment rate trend by age group
-- Normalized cognitive score comparison
-- Comorbidity prevalence by group
-- Income vs. fluency scatter with 95% CI trend lines
-- Box and violin distribution plots
-
----
+| Tab | What it shows |
+|-----|--------------|
+| Cohort Profile | Age-stratified impairment rates, recall score distributions, income gradients |
+| Prevalence Trends | Multi-wave analysis with bootstrap 95% CIs — 8.8 pp decline 2012→2014 |
+| Predictive Model | Logistic regression, AUC=0.716, forest plot, coefficient table |
+| Experiment Design | Interactive A/B test simulator with power curves and feasibility check |
 
 ## Stack
+Python · Streamlit · Plotly · statsmodels · scikit-learn · SciPy · CDC NHANES (public use)
 
-`Python` · `Pandas` · `NumPy` · `SciPy` · `Statsmodels` · `Plotly` · `NHANES Public Data`
+## Key findings
+- Cognitive impairment prevalence declined 8.8 percentage points between 2011-12 (32.2%) and 2013-14 (23.4%), consistent with cohort-level improvements driven by rising educational attainment and better cardiovascular risk management
+- Age is the strongest predictor (OR=1.099 per year, p<0.001); higher income-to-poverty ratio is protective (OR=0.810)
+- Model AUC = 0.716 with McFadden R² = 0.103
+- To detect a 5pp reduction in impairment with 80% power at α=0.05 requires 1,170 participants per arm
 
----
-
-*Amrutha Ravikumar · MPS Analytics, Northeastern University*
+## Run locally
+```bash
+pip install -r requirements.txt
+streamlit run app.py
+```

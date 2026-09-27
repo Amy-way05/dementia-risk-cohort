@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dementia Prevalence Forecast</title>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+           margin: 0; padding: 20px; background: #f9f9f9; }
+    .container { max-width: 900px; margin: 0 auto; background: white;
+                 border-radius: 8px; padding: 24px; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+    h2 { color: #2C3E50; border-bottom: 2px solid #2C7BB6; padding-bottom: 8px; }
+    p  { color: #555; font-size: 14px; line-height: 1.6; }
+    .metric-row { display: flex; gap: 20px; margin: 16px 0; }
+    .metric { background: #f0f4f8; border-radius: 6px; padding: 12px 18px; flex: 1; text-align: center; }
+    .metric .val { font-size: 22px; font-weight: 700; color: #2C7BB6; }
+    .metric .lbl { font-size: 12px; color: #666; margin-top: 4px; }
+    .caveat { background: #fff8e1; border-left: 4px solid #f9a825;
+              padding: 10px 14px; font-size: 13px; color: #555; margin-top: 12px; border-radius: 0 4px 4px 0; }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h2>Panel 7: Cognitive Impairment Prevalence Across NHANES Waves</h2>
+
+  <div class="metric-row">
+    <div class="metric">
+      <div class="val">2</div>
+      <div class="lbl">NHANES waves analyzed (2011-12, 2013-14)</div>
+    </div>
+    <div class="metric">
+      <div class="val">3,126</div>
+      <div class="lbl">Adults aged 60+ in pooled cohort</div>
+    </div>
+    <div class="metric">
+      <div class="val">32.2% → 23.4%</div>
+      <div class="lbl">Prevalence shift 2012 to 2014</div>
+    </div>
+    <div class="metric">
+      <div class="val">95%</div>
+      <div class="lbl">Bootstrap confidence intervals (2,000 resamples)</div>
+    </div>
+  </div>
+
+  <div id="chart"></div>
+
+  <p>
+    <strong>Methodology:</strong> Cognitive impairment was defined using a consistent
+    recall score threshold (CFDCSR &le; 4) applied to adults aged 60 and over across
+    two NHANES cycles (2011-12 and 2013-14). Bootstrap 95% confidence intervals
+    were computed per wave using 2,000 resamples. A linear trend line is shown
+    for illustrative purposes; the vertical dashed line marks the observed data boundary.
+  </p>
+
+  <p>
+    <strong>Key finding:</strong> Cognitive impairment prevalence declined from 32.2%
+    (2011-12, n=1,454) to 23.4% (2013-14, n=1,672), an 8.8 percentage-point reduction
+    over one NHANES cycle. This pattern is consistent with published literature on
+    cohort-level improvements in cognitive health driven by rising educational attainment
+    and better cardiovascular risk management. Extending this analysis across additional
+    NHANES waves would be required to confirm the trend directionally.
+  </p>
+
+  <div class="caveat">
+    <strong>Limitation:</strong> A linear forecast cannot be reliably fit from two data points.
+    The trend line above is illustrative only and should not be interpreted as a projection.
+    Additional NHANES cycles (2015-16 cognitive data was not publicly released) would be
+    needed to build a validated forecasting model.
+  </div>
+</div>
+
+<script>
+var traces = [
+  {
+    type: "scatter",
+    x: [2012, 2014],
+    y: [32.2, 23.4],
+    error_y: {
+      type: "data", symmetric: false,
+      array: [2.5, 2.1],
+      arrayminus: [2.4, 2.0],
+      visible: true
+    },
+    mode: "markers+lines",
+    name: "Observed (NHANES)",
+    marker: {size: 12, color: "#2C7BB6"},
+    line: {width: 2, color: "#2C7BB6"}
+  },
+  {
+    type: "scatter",
+    x: [2014, 2016, 2018, 2020, 2022, 2024, 2026, 2028, 2030],
+    y: [23.4, 14.4, 5.4, null, null, null, null, null, null],
+    mode: "lines",
+    name: "Linear trend (illustrative only)",
+    line: {color: "#FF7F00", width: 1.5, dash: "dot"},
+    showlegend: true
+  }
+];
+
+var layout = {
+  title: "Cognitive Impairment Prevalence, Age 60+ (NHANES 2011-2014)",
+  xaxis: {title: "Year", range: [2010, 2025], gridcolor: "#eeeeee"},
+  yaxis: {title: "Impairment Prevalence (%)", range: [0, 40], gridcolor: "#eeeeee"},
+  legend: {x: 0.6, y: 0.95},
+  plot_bgcolor: "white",
+  paper_bgcolor: "white",
+  height: 420,
+  shapes: [{
+    type: "line", x0: 2014, x1: 2014, y0: 0, y1: 1,
+    xref: "x", yref: "paper",
+    line: {color: "gray", width: 1, dash: "dash"}
+  }],
+  annotations: [{
+    x: 2014, y: 38, xref: "x", yref: "y",
+    text: "Observed data ends", showarrow: false,
+    font: {size: 11, color: "gray"}
+  }]
+};
+
+Plotly.newPlot("chart", traces, layout, {responsive: true});
+</script>
+</body>
+</html>

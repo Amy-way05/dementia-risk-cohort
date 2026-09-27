@@ -67,7 +67,7 @@ st.markdown("""
 @st.cache_data
 def load_data():
     df = pd.read_csv(
-        "../forecasting/data/nhanes_pooled.csv"
+        "nhanes_pooled.csv"
     )
     df = df.rename(columns={
         'RIDAGEYR':'age','RIAGENDR':'gender','RIDRETH3':'race',

@@ -1,0 +1,7 @@
+streamlit==1.64.0
+pandas
+numpy
+plotly
+scipy
+statsmodels
+scikit-learn
